@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>혐오 매력</title>
+  <link rel="icon" type="image/png" href="썸네일.png">
+  <style>
+    @font-face {
+  font-family: 'Soonakpilyeosa';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2202@1.0/SSVeryBadHandwriting.woff') format('woff');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Jibaek120';
+  src:url('Jibaek120.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Jibaek260';
+  src:url('Jibaek260.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'SM3M';
+  src: url('./sm3m.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'SM3G';
+  src: url('./sm3g.ttf') format('truetype');
+}
+
+    * { cursor: none; }
+    body, h1, h2, h3, p { margin: 0; }
+    body {
+      background-color: #ffffff;
+      overflow-x: hidden;
+    }
+    .landing {
+      width: 100vw;
+      min-height: 100vh;
+      padding: 60px 0 0 60px;
+      position: relative;
+      box-sizing: border-box;
+    }
+    .bg-text-wrap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 3;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .bg-row {
+  display: block;
+  font-family: 'Soonakpilyeosa';
+  font-weight: 300;
+  font-size: 30px;
+  color: #FF0000;
+  white-space: nowrap;
+  line-height: 1.3;
+  opacity: 1;
+  animation: wave 2.5s ease-in-out infinite;
+}
+
+    @keyframes wave {
+      0%   { transform: translateY(0px); }
+      50%  { transform: translateY(-30px); }
+      100% { transform: translateY(0px); }
+    }
+    h1.title-main {
+  font-family: 'Soonakpilyeosa';
+  font-weight: 300;
+  font-size: 200px;
+  line-height: 0.95;
+  color: #FF0000;
+  letter-spacing: -2px;
+  position: relative;
+  z-index: 4;
+  background-color: #000000;
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 10px;
+}
+
+    p.title-sub {
+  font-family: 'Jibaek260';
+  font-weight: 850;
+  font-size: 35px;
+  color: #FF0000;
+  line-height: 1;
+  margin-top: 8px;
+  position: relative;
+  z-index: 4;
+  background-color: #000000;
+  display: inline;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 2px 8px;
+}
+    #warning {
+      width: 100vw;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, #000000 0%, #1a0000 40%, #FF0000 100%);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 80px;
+      box-sizing: border-box;
+    }
+    .warning-content { text-align: center; }
+    .warning-title {
+  font-family: 'SM3M';
+  font-weight: 900;
+  font-size: 50px;
+  color: #FF0000;
+  line-height: 2;
+  margin: 0 0 60px 0;
+}
+
+    .warning-text {
+  font-family: 'Jibaek120';
+  font-weight: 400;
+  font-size: 18px;
+  color: #ffffff;
+  line-height: 2;
+  letter-spacing: 0.05em;
+}
+
+    #videoWrap {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 1;
+      overflow: hidden;
+    }
+    #acneVideo {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    #zoom-wrap {
+      position: absolute;
+      width: 500px; height: 500px;
+      overflow: hidden;
+      pointer-events: none;
+      display: none;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+    }
+    #acneVideoZoom {
+      position: absolute;
+      width: 700%;
+      transform: translate(var(--zx), var(--zy));
+    }
+    #custom-cursor {
+      position: fixed;
+      width: 20px; height: 20px;
+      background: #FFE600;
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 99999;
+      transition: width 0.15s ease, height 0.15s ease;
+    }
+    .popup-window {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9000;
+      border: 2px solid #cccccc;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.5);
+      background: #f0f0f0;
+      animation: popFade 1.2s ease-out forwards;
+      overflow: hidden;
+    }
+    .popup-titlebar {
+      background: linear-gradient(to right, #000080, #1084d0);
+      height: 22px;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      justify-content: space-between;
+    }
+    .popup-titlebar span {
+      color: white;
+      font-size: 11px;
+      font-family: Arial, sans-serif;
+    }
+    .popup-titlebar .close-btn {
+      background: #cc0000;
+      color: white;
+      font-size: 10px;
+      font-family: Arial;
+      width: 16px; height: 16px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid #880000;
+    }
+    .popup-window img {
+      display: block;
+      width: 100%;
+      height: calc(100% - 22px);
+      object-fit: cover;
+    }
+    @keyframes popFade {
+      0%   { opacity: 0; transform: scale(0.7); }
+      15%  { opacity: 1; transform: scale(1); }
+      75%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+    #gallery-section { width: 100vw; background: #000; padding: 0; margin: 0; }
+    #gallery-grid { display: grid; grid-template-columns: repeat(5, 1fr); width: 100vw; gap: 0; }
+    .gallery-cell {
+      width: 100%; aspect-ratio: 1/1; overflow: hidden;
+      border: 0.5px solid rgba(255,255,255,0.08);
+      cursor: crosshair; position: relative;
+    }
+    .gallery-cell img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: blur(14px) brightness(0.5);
+      transform: scale(1);
+      transition: filter 0.15s ease, transform 0.15s ease;
+    }
+    .gallery-cell:hover img {
+      filter: blur(0px) brightness(1.2) contrast(1.1);
+      transform: scale(1.25);
+      z-index: 10;
+    }
+    .gallery-cell.flash img {
+      filter: blur(0px) brightness(1.2);
+      transform: scale(1.08);
+    }
+    @keyframes flicker {
+      0%, 100% {
+        text-shadow: 0 0 10px #ffffff, 0 0 30px #ff0000, 0 0 60px #ff0000;
+      }
+      5% { text-shadow: none; }
+      10% {
+        text-shadow: 0 0 20px #ffffff, 0 0 50px #ff0000, 0 0 90px #ff0000;
+      }
+      15% {
+        text-shadow: 0 0 10px #ffffff, 0 0 30px #ff0000, 0 0 60px #ff0000;
+      }
+      50% {
+        text-shadow: 0 0 10px #ffffff, 0 0 30px #ff0000, 0 0 60px #ff0000;
+      }
+      52% { text-shadow: none; }
+      54% {
+        text-shadow: 0 0 10px #ffffff, 0 0 30px #ff0000, 0 0 60px #ff0000;
+      }
+    }
+
+    /* wall-section */
+    #wall-section {
+      width: 100vw;
+      position: relative;
+      overflow: hidden;
+    }
+    #pimple-wrap {
+      position: absolute;
+      top: 17.2%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      z-index: 8;
+      pointer-events: none;
+    }
+    #pop-bg-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    #pimple-overlay {
+      position: absolute;
+      top: 12%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 26%;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%,
+        #ffe8b0 0%, #f09040 28%, #cc3300 62%, #7a1500 100%);
+      box-shadow:
+        0 0 50px 18px rgba(220,120,20,0.5),
+        0 0 100px 35px rgba(220,80,10,0.25);
+      z-index: 9;
+      animation: pimplePop2 2s ease-in-out infinite;
+    }
+    @keyframes pimplePop2 {
+      0%   { transform: translateX(-50%) scale(1);    opacity: 1; }
+      55%  { transform: translateX(-50%) scale(1.22); opacity: 1; }
+      65%  { transform: translateX(-50%) scale(0.04); opacity: 0; }
+      66%  { transform: translateX(-50%) scale(0);    opacity: 0; }
+      90%  { transform: translateX(-50%) scale(0);    opacity: 0; }
+      100% { transform: translateX(-50%) scale(1);    opacity: 1; }
+    }
+    #pop-flash2 { display: none; }
+    #pop-canvas2 {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 15;
+      pointer-events: none;
+    }
+
+.reason-bg-pattern{
+  position:absolute;
+  top:23%;
+  left:0;
+  width:100%;
+  height:1600px;
+  background:url('-22.png') center center/cover no-repeat;
+  z-index:1;
+}
+
+.reason-black-box{
+  position:absolute;
+  top:26.6%;
+  left:30%;
+  width:70%;
+  background:#000;
+  color:#fff;
+  padding:40px;
+  box-sizing:border-box;
+  z-index:22;
+
+  font-family:'SM3G';
+  font-size:2.2rem;
+  line-height:1.8;
+  font-weight:700;
+}
+
+.reason-diagonal-image{
+  position:absolute;
+  top:54%;
+  left:4%;
+  width:62%;
+  transform:rotate(-38deg);
+  z-index:23;
+}
+
+.reason-diagonal-image img{
+  width:100%;
+  display:block;
+}
+
+.reason-yellow-text{
+  position:absolute;
+  top:32%;
+  
+  transform:rotate(-38deg);
+
+  font-family:'SM3G';
+  font-size:8rem;
+  line-height:1.15;
+  font-weight:900;
+  color: #00FF11;
+  -webkit-text-stroke: 1px #000000;
+  z-index:24;
+}
+
+.reason-corner-image {
+  position: absolute;
+  right: 2%;
+  top: 31%;
+  width: 30%;
+  z-index: 22;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reason-corner-image img {
+  width: 100%;
+  display: block;
+}
+
+
+
+.reason-pink-text{
+  position:absolute;
+  top:48%;
+  right:-18%;
+  transform:rotate(90deg);
+
+  font-family:'SM3G';
+  font-size:8rem;
+  line-height:1.15;
+  font-weight:900;
+  color: yellow;
+  -webkit-text-stroke: 1px #000000;
+
+  z-index:24;
+}
+
+.reason-black-box22{
+  position:absolute;
+  top:43%;
+  left:0%;
+  width:70%;
+  background:#000;
+  color:#fff;
+  padding:40px;
+  box-sizing:border-box;
+  z-index:22;
+
+  font-family:'SM3G';
+  font-size:2.2rem;
+  line-height:1.8;
+  font-weight:700;
+}
+
+.reason-corner-image22 {
+  position: absolute;
+  left: 2%;
+  top: 48%;
+  width: 30%;
+  z-index: 22;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reason-corner-image img {
+  width: 100%;
+  display: block;
+}
+
+
+.reason-black-box33{
+  position:absolute;
+  top:69.6%;
+  left:0%;
+  width:70%;
+  background:#000;
+  color:#fff;
+  padding:40px;
+  box-sizing:border-box;
+  z-index:22;
+
+  font-family:'SM3G';
+  font-size:2.2rem;
+  line-height:1.8;
+  font-weight:700;
+}
+
+.reason-last-text{
+  position:absolute;
+  top:77%;
+  right:-18%;
+  transform:rotate(75deg);
+
+  font-family:'SM3G';
+  font-size:8rem;
+  line-height:1.15;
+  font-weight:900;
+  color: magenta;
+  -webkit-text-stroke: 1px #000000;
+
+  z-index:24;
+}
+  </style>
+</head>
+<body>
+
+  <div id="custom-cursor"></div>
+
+  <div class="landing" id="landingSection">
+    <div id="videoWrap">
+      <video id="acneVideo" autoplay muted loop playsinline>
+        <source src="acne.mp4" type="video/mp4">
+      </video>
+      <div id="zoom-wrap">
+        <video id="acneVideoZoom" autoplay muted loop playsinline>
+          <source src="acne.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="bg-text-wrap" id="bgTextWrap"></div>
+    <h1 class="title-main">혐오 매력,</h1>
+    <br>
+    <p class="title-sub">당신이 이러한 콘텐츠를 계속 보게 되는 이유….</p>
+  </div>
+
+  <section id="warning">
+    <div class="warning-content">
+      <h2 class="warning-title">경고<br>WARNING</h2>
+      <p class="warning-text">
+        징그럽고 혐오스러운 장면이 있으니 심약자는 주의 바랍니다.<br>
+        There is a scene that makes you feel sick and disgusted,<br>
+        so please be careful if you are weak in your heart.
+      </p>
+    </div>
+  </section>
+
+  <section id="gallery-section">
+    <div id="gallery-grid"></div>
+  </section>
+  <script src="gallery.js"></script>
+
+  <script>
+    setInterval(function() {
+      const cells = document.querySelectorAll('.gallery-cell');
+      if (!cells.length) return;
+      const count = Math.floor(Math.random() * 8) + 3;
+      for (let i = 0; i < count; i++) {
+        const cell = cells[Math.floor(Math.random() * cells.length)];
+        cell.classList.add('flash');
+        setTimeout(function() {
+          cell.classList.remove('flash');
+        }, Math.random() * 600 + 200);
+      }
+    }, 300);
+  </script>
+
+  <!-- wall-section -->
+  <section id="wall-section">
+    <img src="wall.png" alt="벽" style="width: 100%; height: auto; display: block;">
+
+    <div id="pimple-wrap">
+      <img id="pop-bg-img" src="이미지 3/-29.png" alt="여드름 단면">
+      <div id="pimple-overlay"></div>
+      <div id="pop-flash2"></div>
+    </div>
+
+    <canvas id="pop-canvas2"></canvas>
+
+    <!-- 텍스트 1 — 왼쪽 기울어진 질문들 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 2%;
+      left: 4%;
+      transform: rotate(-15deg);
+      transform-origin: left top;
+      font-family: 'Jibaek260';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    ">
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.5rem; font-weight: 600;">
+        SNS, 릴스, 유튜브에 가끔 뜨는
+      </div>
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.5rem; font-weight: 600;">
+        여드름 압출 영상,
+      </div>
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.5rem; font-weight: 600;">
+        피지 제거 영상... 등에
+      </div>
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.5rem; font-weight: 600;">
+        잠시 스크롤을 멈추고
+      </div>
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.5rem; font-weight: 600; margin-top: 5px;">
+        끝까지 지켜본 적 없으신가요?
+      </div>
+      <br>
+      <div style="background-color: #000000; color: #ffffff; padding: 10px 15px; font-size: 1.8rem; font-weight: 600;">
+        중독적으로 뜨면 계속 보게 되지는 않으신가요?
+      </div>
+    </div>
+
+    <!-- 텍스트 2 — 오른쪽 기울어진 통계 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 7%;
+      right: 4%;
+      transform: rotate(10deg);
+      transform-origin: right;
+      font-family: 'Soonakpilyeosa';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    ">
+      <div style="background-color: transparent; color: #000000; padding: 10px 15px; font-size: 7rem; font-weight: 1000;">
+        정말 수많은 관련 영상이 존재하며,
+      </div>
+      <div style="background-color: transparent; color: #000000; padding: 10px 15px; font-size: 7rem; font-weight: 1000;">
+        심지어 이러한 영상들은 모두 사람들에게 <br> 인기 콘텐츠로 자리 잡고 있다.
+      </div>
+    </div>
+
+    <!-- 도대체 왜? -->
+    <div class="todaeche-text" style="
+      position: absolute;
+      bottom: 85%;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      z-index: 5;
+    ">
+      <h2 style="
+        font-family: 'SM3M';
+        font-weight: 900;
+        font-size: 330px;
+        color: #ffffff;
+        line-height: 1;
+        margin: -145px;
+        -webkit-text-stroke: 0px #000000;
+        paint-order: stroke fill;
+        animation: flicker 1.5s infinite;
+      ">
+        도대체<br>왜?
+      </h2>
+    </div>
+
+    <!-- 텍스트 3 — 우리가 이런 콘텐츠를 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 24.65%;
+      left: 0%;
+      transform: rotate(0deg);
+      font-family: 'Soonakpilyeosa';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    ">
+      <div style="background-color: white; color: black; padding: 0px 15px; font-size: 3.5rem; font-weight: 900;">
+        우리가 이런 콘텐츠를 계속 보게 되는
+      </div>
+    </div>
+
+    <!-- 텍스트 4 — 이유 1 제목 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 25.23%;
+      transform: rotate(0deg);
+      font-family: 'SM3M';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    ">
+      <div style="background-color: yellow; color: black; padding: 0px 15px; font-size: 5.5rem; font-weight: 900;">
+        이유 1. 혐오 매력(Morbid Curiosity)
+      </div>
+    </div>
+
+    <!-- 텍스트 6 — 이상한 것이 아니다 (기울어진) -->
+    <div class="reason-bg-pattern"></div>
+
+<div class="reason-black-box">
+징그러운 것을 보면서도 멈추지 못하는 것은 비정상이 아니다.
+
+심리학자 Coltan Scrivner는 2021년 연구에서 혐오 매력을
+'위협적인 상황에 대한 정보를 적극적으로 탐색하려는 성향'이라 정의한다.
+
+즉, 인간의 뇌는 위험을 피하기 위해 오히려 그것을 직면하려 한다는 것이다.
+
+수만 년 전 인류가 맹수의 사체를 들여다보며 위험을 학습했던 것처럼,
+오늘날 우리는 압출 영상을 보며 같은 일을 하고 있다.
+
+혐오는 회피의 신호가 아니라 학습의 신호다.
+</div>
+
+<div class="reason-diagonal-image">
+  <img src="-1.jpg" alt="">
+</div>
+
+<div class="reason-yellow-text">
+  이상한 것이 아니다.<br>
+  원래 그렇게 설계된 것이다.
+</div>
+
+<div class="reason-corner-image">
+  <img src="i20.png" alt="">
+  <img src="i22.png" alt="">
+  <img src="i1.jpg" alt="">
+</div>
+
+
+
+
+
+
+
+<!-- 이유 2 제목 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 40%;
+      transform: rotate(0deg);
+      font-family: 'SM3M';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    ">
+      <div style="background-color: #0009FF; color: white; padding: 0px 15px; font-size: 5.5rem; font-weight: 900;">
+        이유 2. 길티 플레저
+            (Guilty Pleasure)
+      </div>
+    </div>
+
+    <!-- 텍스트 6 — 이상한 것이 아니다 (기울어진) -->
+    <div class="reason-bg-pattern"></div>
+
+<div class="reason-black-box22">
+보면 안 될 것 같으면서도 손이 가는 그 감정에는 이름이 있다. <br>심리학자 Goffin과 Cova는 길티 플레저를 "즐거움과 죄책감이<br> 동시에 활성화되는 심리적 불협화음 상태"라 정의한다. 이는 단순한<br> 후회와 다르다. 후회는 행동이 끝난 뒤에 찾아오지만, 길티 플레저는<br> 즐기는 도중에도 그 찜찜함이 공존한다. 그리고 역설적으로,<br> 그 찜찜함이 다시 보게 만든다. Dr. Pimple Popper의 유튜브 <br>조회수는 10억 회를 넘는다. Reddit r/popping 커뮤니티 <br>멤버 수는 50만 명에 달한다. 혼자만의 감정이 아니다.
+</div>
+
+<div class="reason-diagonal-image">
+  <img src="-1.jpg" alt="">
+</div>
+
+<div class="reason-pink-text">
+싫어... 그치만 좋아...<br>
+계속계속 보게 돼...<br>
+진짜 내 마음은 뭘까...
+</div>
+
+<div class="reason-corner-image22">
+  <img src="o23.jpeg" alt="">
+  <img src="o24.png" alt="">
+  <img src="o25.jpg" alt="">
+  <img src="o13.jpg" alt="">
+</div>
+
+
+
+
+
+
+
+
+<!-- 이유 3 제목 -->
+    <div class="rotated-text-container" style="
+      position: absolute;
+      top: 65%;
+      transform: rotate(0deg);
+      font-family: 'SM3M';
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    ">
+      <div style="background-color: limegreen; color: black; padding: 0px 15px; font-size: 5.5rem; font-weight: 900;">
+        이유 3. ASMR(Autonomous Sensory Meridian Response), <br>자율 감각 쾌락 반응
+      </div>
+    </div>
+
+    <!-- 텍스트 6 — 이상한 것이 아니다 (기울어진) -->
+    <div class="reason-bg-pattern"></div>
+
+<div class="reason-black-box33">
+압출 영상을 보다가 이상하게 차분해진 경험이 있는가.<br> 
+등골이 시원해지거나 머리가 멍해지는 그 감각. 이를 ASMR,<br> 
+자율 감각 쾌락 반응이라 한다. 많은 시청자들이 압출 영상을 통해<br>
+이 감각을 경험한다고 보고한다. 그레츠 대학교 연구진은 fMRI로<br>
+압출 영상을 시청하는 뇌를 실제로 스캔했다. 영상을 즐기는
+사람들은<br> 뇌의 쾌락 보상 시스템인 측좌핵이 활발하게 반응하는
+것으로<br> 나타났다. 이 회로는 맛있는 음식을 먹거나 좋아하는
+음악을 들을 때<br> 활성화되는 것과 동일하다. 뇌 입장에서 압출 
+영상과 햄버거는 크게 <br>다르지 않다.
+</div>
+
+<div class="reason-diagonal-image">
+  <img src="-1.jpg" alt="">
+</div>
+
+<div class="reason-last-text">
+나에게 압출 영상과 <br>햄버거는 다를게 없어!
+
+<div class="reason-corner-image22">
+
+</div>
+
+
+
+
+
+
+
+
+
+
+  </section>
+
+
+
+<!-- ══════════════════════════════════════════
+     카타르시스 시뮬레이터
+══════════════════════════════════════════ -->
+<section id="simulator-section" style="
+  width: 100vw;
+  background: #000;
+  padding: 100px 0 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  border-top: 3px solid #FF0000;
+">
+
+  <h3 style="font-family:'SM3G';font-size:70px;color:yellow;margin:0 0 15px;text-align:center;">
+    압출 카타르시스 시뮬레이터
+  </h3>
+  <p style="font-family:'SM3M';font-size:18px;color:white;margin:0 0 60px;text-align:center;">
+    <아래의 가상 여드름을 꾹~ 눌러 직접 압출 도파민을 충전해 보세요.>
+  </p>
+
+  <div id="sim-pore-wrapper" style="
+    position: relative;
+    width: 500px;
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 60px;
+  ">
+    <div id="sim-skin" style="
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #d28080 0%, #904848 100%);
+      border-radius: 50%;
+      box-shadow: inset 0 6px 18px rgba(0,0,0,0.5), 0 12px 24px rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      cursor: none;
+      transition: transform 0.1s ease, background 0.3s ease;
+    ">
+      <div id="sim-pimple" style="
+        width: 140px;
+        height: 140px;
+        background: radial-gradient(circle, #ff5e5e 0%, #e60000 75%, #8c0000 100%);
+        border-radius: 50%;
+        box-shadow: 0 5px 12px rgba(0,0,0,0.5), inset 0 -3px 8px rgba(0,0,0,0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        animation: simPulse 2s infinite;
+      ">
+        <div id="sim-pus" style="
+          width: 40px;
+          height: 40px;
+          background: radial-gradient(circle, #fffae3 0%, #ffd000 100%);
+          border-radius: 50%;
+        "></div>
+      </div>
+    </div>
+    <div id="sim-bubble" style="
+      position: absolute;
+      top: -10px;
+      font-family: 'SM3G';
+      font-size: 18px;
+      color: #fff;
+      background: #ff0000;
+      padding: 9px 20px;
+      border-radius: 20px;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: bubbleBob 1.5s ease-in-out infinite;
+    ">지그시 누르고 떼어보세요.</div>
+  </div>
+
+  <!-- 게이지 -->
+  <div style="width:480px;display:flex;flex-direction:column;align-items:center;">
+    <span style="font-family:'Jibaek120';font-size:18px;font-weight:700; color:#888;margin-bottom:12px;letter-spacing:0.5px;">뇌내 도파민 게이지</span>
+    <div style="width:100%;height:12px;background:#1a1a1a;border-radius:6px;overflow:hidden;margin-bottom:12px;">
+      <div id="sim-gauge" style="height:100%;background:linear-gradient(to right,#ff0000,#fffa00);width:0%;border-radius:6px;transition:width 0.3s ease;box-shadow:0 0 10px #ff4d4d;"></div>
+    </div>
+    <span id="sim-status" style="font-family:Arial;font-size:18px;font-weight:bold;color:#fff;">0%</span>
+    <button id="sim-reset" style="
+      display:none;
+      margin-top:30px;
+      font-family:'SM3G';
+      font-size:18px;
+      font-weight:700;
+      color:#fff;
+      background:rgba(255,0,0,0.08);
+      border:1px solid rgba(255,0,0,0.35);
+      padding:12px 30px;
+      border-radius:30px;
+      cursor:none;
+    ">다시 압출하기</button>
+  </div>
+</section>
+
+<style>
+  @keyframes simPulse {
+    0%,100% { box-shadow: 0 5px 12px rgba(0,0,0,0.5), 0 0 15px #ff0000; }
+    50% { box-shadow: 0 5px 12px rgba(0,0,0,0.5), 0 0 35px #ff0000; }
+  }
+  @keyframes bubbleBob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  #sim-reset:hover { background: #ff0000; }
+  #sim-skin.sim-squeezing {
+    transform: scale(0.94);
+    background: radial-gradient(circle, #c47272 0%, #833e3e 100%) !important;
+  }
+  #sim-skin.sim-popped #sim-pimple {
+    background: radial-gradient(circle, #4a0000 0%, #2f0000 100%) !important;
+    transform: scale(0.75);
+    animation: none !important;
+  }
+  #sim-skin.sim-popped #sim-pus { display: none; }
+  #sim-skin.sim-popped::after {
+    content: '정화 완료';
+    position: absolute;
+    bottom: -45px;
+    font-family: 'SM3G';
+    font-size: 20px;
+    color: #FFE600;
+  }
+  .sim-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 100;
+  }
+  .sim-pop-text {
+    position: absolute;
+    font-family: 'SM3M';
+    font-size: 38px;
+    color: #FFE600;
+    text-shadow: 0 0 10px #ff0000;
+    font-weight: 900;
+    pointer-events: none;
+    z-index: 200;
+    animation: simPopFloat 1s ease-out forwards;
+  }
+  @keyframes simPopFloat {
+    0% { transform: scale(0.5) translateY(0); opacity: 0; }
+    15% { transform: scale(1.2) translateY(-20px); opacity: 1; }
+    80% { transform: scale(1) translateY(-70px); opacity: 1; }
+    100% { transform: scale(0.8) translateY(-90px); opacity: 0; }
+  }
+</style>
+
+<script>
+(function() {
+  const skin    = document.getElementById('sim-skin');
+  const pimple  = document.getElementById('sim-pimple');
+  const pus     = document.getElementById('sim-pus');
+  const gauge   = document.getElementById('sim-gauge');
+  const status  = document.getElementById('sim-status');
+  const resetBtn= document.getElementById('sim-reset');
+  const bubble  = document.getElementById('sim-bubble');
+
+  let progress = 0, squeezing = false, timer = null, popped = false;
+
+  function start() {
+    if (popped) return;
+    squeezing = true;
+    skin.classList.add('sim-squeezing');
+    if (bubble) bubble.style.display = 'none';
+    timer = setInterval(() => {
+      if (progress < 100) {
+        progress += 2.5;
+        gauge.style.width = progress + '%';
+        status.textContent = Math.floor(progress) + '%';
+        pimple.style.transform = `scale(${1 + progress/300}) translate(${(Math.random()-.5)*2}px,${(Math.random()-.5)*2}px)`;
+      } else {
+        clearInterval(timer);
+        doPop();
+      }
+    }, 30);
+  }
+
+  function end() {
+    if (!squeezing) return;
+    squeezing = false;
+    skin.classList.remove('sim-squeezing');
+    clearInterval(timer);
+    if (!popped) {
+      progress = 0;
+      gauge.style.width = '0%';
+      status.textContent = '0%';
+      pimple.style.transform = 'scale(1)';
+      if (bubble) bubble.style.display = 'block';
+    }
+  }
+
+  function doPop() {
+    popped = true;
+    skin.classList.remove('sim-squeezing');
+    skin.classList.add('sim-popped');
+    status.textContent = '100% MAX';
+    status.style.color = '#FFE600';
+    resetBtn.style.display = 'block';
+
+    const rect = skin.getBoundingClientRect();
+    const cx = rect.left + rect.width/2 + window.scrollX;
+    const cy = rect.top + rect.height/2 + window.scrollY;
+
+    for (let i = 0; i < 80; i++) {
+      const p = document.createElement('div');
+      p.className = 'sim-particle';
+      const isPus = Math.random() > 0.3;
+      const size = isPus ? Math.random()*16+5 : Math.random()*8+2;
+      p.style.cssText = `width:${size}px;height:${size}px;background:${isPus?'#FFE600':'#cc0000'};left:${cx}px;top:${cy}px;`;
+      document.body.appendChild(p);
+      const angle = Math.random() * Math.PI * 2;
+      const spd = Math.random() * 120 + 40;
+      const vx = Math.cos(angle)*spd, vy = Math.sin(angle)*spd - Math.random()*40;
+      let life = 0;
+      const iv = setInterval(() => {
+        life += 0.03;
+        p.style.left = (cx + vx*life) + 'px';
+        p.style.top  = (cy + vy*life + 200*life*life) + 'px';
+        p.style.opacity = 1 - life;
+        if (life >= 1) { clearInterval(iv); p.remove(); }
+      }, 16);
+    }
+
+    const t = document.createElement('div');
+    t.className = 'sim-pop-text';
+    t.textContent = '카타르시스 완충! +100%';
+    t.style.cssText = `left:${cx - 150}px;top:${cy - 60}px;`;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 1000);
+
+    document.body.style.animation = 'screenShake 0.15s ease';
+    setTimeout(() => document.body.style.animation = '', 300);
+  }
+
+  skin.addEventListener('mousedown', start);
+  document.addEventListener('mouseup', end);
+  skin.addEventListener('touchstart', e => { e.preventDefault(); start(); }, {passive:false});
+  document.addEventListener('touchend', end);
+
+  resetBtn.addEventListener('click', () => {
+    popped = false; progress = 0;
+    skin.classList.remove('sim-popped');
+    gauge.style.width = '0%';
+    status.textContent = '0%';
+    status.style.color = '#fff';
+    pimple.style.transform = 'scale(1)';
+    resetBtn.style.display = 'none';
+    if (bubble) bubble.style.display = 'block';
+  });
+})();
+</script>
+
+
+<!-- ══════════════════════════════════════════
+     푸터
+══════════════════════════════════════════ -->
+<footer id="site-footer" style="
+  width: 100vw;
+  background: #000;
+  border-top: 2px solid #FF0000;
+  padding: 60px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+">
+  <div>
+    <div style="font-family:'SM3M';font-size:28px;color:#FF0000;font-weight:900;margin-bottom:16px;">혐오 매력, <br> 당신이 이런 컨텐츠를 <br> 즐기는 이유. </div>
+    <div style="font-family:'Jibaek120';font-size:15px;color: white;line-height:2;">
+      웹인터랙션 디자인 기말 프로젝트<br>
+      2025. 06. 16
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'Jibaek120';font-size:16px;color:#fff;font-weight:900;margin-bottom:16px;letter-spacing:0.1em;">징그럽지만 멈출 수 없다?!</div>
+    <div style="font-family:'Jibaek120';font-size:13px;color:#666;line-height:2.2;">
+<br> 이 프로젝트는 여드름 압출, 피지 제거 같은 혐오스러운 콘텐츠를 사람들이 반복해서 보게 되는 심리적 원인을 <br>탐구한 웹사이트입니다. 혐오 매력, 길티 플레저, <br>ASMR 이라는 세 가지 심리학적 관점으로 그 이유를 풀어냈습니다. 징그럽다고 생각하면서도 이 페이지 끝까지 본 당신, 이미 증명된 셈입니다.
+    </div>
+  </div>
+  <div>
+    <div style="font-family:'SM3M';font-size:16px;color:#fff;font-weight:900;margin-bottom:16px;letter-spacing:0.1em;"> CONTACT </div>
+    <div style="font-family:'SM3M';font-size:13px;color:#666;line-height:2.2;">
+      +82 10-2123-2399<br>
+      juyun365@seoultech.ac.kr<br>
+      Seoul, Republic of Korea
+    </div>
+    <div style="font-family:'Jibaek120';font-size:15px;color: white;line-height:2;">
+      <br> 2026 혐오 매력 프로젝트. <br> © 24101048 현주윤. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+
+
+
+
+  <!-- 파티클 스크립트 -->
+  <script>
+  (function() {
+    const canvas  = document.getElementById('pop-canvas2');
+    const ctx     = canvas.getContext('2d');
+    const section = document.getElementById('wall-section');
+    const wrap    = document.getElementById('pimple-wrap');
+
+    function resize() {
+      canvas.width  = section.offsetWidth;
+      canvas.height = section.offsetHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const POP_AT = 0.65;
+    let particles = [];
+    let lastTime  = null;
+    let popped    = false;
+
+    function getPopOrigin() {
+      const wRect = section.getBoundingClientRect();
+      const pRect = wrap.getBoundingClientRect();
+      const cx = pRect.left - wRect.left + pRect.width * 0.5;
+      const cy = pRect.top  - wRect.top  + pRect.height * 0.30;
+      return { cx, cy };
+    }
+
+    function spawnParticles() {
+      const { cx, cy } = getPopOrigin();
+
+      for (let k = 0; k < 3; k++) {
+        particles.push({
+          x: cx + (Math.random()-0.5)*10,
+          y: cy,
+          vx: (Math.random()-0.5)*15,
+          vy: -(Math.random()*120+100),
+          size: 28+Math.random()*18,
+          color: '#FFF176',
+          alpha: 1, life: 1.6, elapsed: 0,
+          gravity: 12, spin: 0, angle: 0,
+          trail: [], isCore: true,
+        });
+      }
+
+      for (let i = 0; i < 120; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 130 + 50;
+        const isPus = Math.random() > 0.3;
+        const pusColors   = ['#FFE600','#FFD000','#FFC300','#FFEC60','#fff8a0','#ffe066'];
+        const bloodColors = ['#cc0000','#8B0000','#ff2200','#990000','#ff4400'];
+        particles.push({
+          x: cx + (Math.random()-0.5)*15,
+          y: cy,
+          vx: Math.cos(angle)*speed,
+          vy: Math.sin(angle)*speed - Math.random()*50,
+          size: isPus ? Math.random()*16+4 : Math.random()*8+2,
+          color: isPus
+            ? pusColors[Math.floor(Math.random()*pusColors.length)]
+            : bloodColors[Math.floor(Math.random()*bloodColors.length)],
+          alpha: 1,
+          life: Math.random()*0.7+0.25,
+          elapsed: 0,
+          gravity: Math.random()*10+8,
+          spin: (Math.random()-0.5)*15,
+          angle: Math.random()*Math.PI*2,
+          trail: [],
+          isCore: false,
+          isPus,
+        });
+      }
+    }
+
+    function update(dt) {
+      particles = particles.filter(p => p.alpha > 0.01);
+      for (const p of particles) {
+        p.trail.push({x: p.x, y: p.y, alpha: p.alpha});
+        if (p.trail.length > 6) p.trail.shift();
+        p.elapsed += dt;
+        const t = p.elapsed / p.life;
+        p.alpha = Math.max(0, 1 - t*t);
+        p.x += p.vx * dt;
+        p.y += p.vy * dt;
+        p.vy += p.gravity * dt * 60;
+        p.vx *= 0.97;
+        p.angle += p.spin * dt;
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (const p of particles) {
+        for (let i = 0; i < p.trail.length; i++) {
+          const t = p.trail[i];
+          const ratio = i / p.trail.length;
+          ctx.save();
+          ctx.globalAlpha = t.alpha * ratio * 0.35;
+          ctx.fillStyle = p.color;
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, p.size * ratio * 0.7, 0, Math.PI*2);
+          ctx.fill();
+          ctx.restore();
+        }
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(p.x, p.y);
+
+        if (p.isCore) {
+          const glow = ctx.createRadialGradient(0,0,0,0,0,p.size*2.5);
+          glow.addColorStop(0, 'rgba(255,240,100,0.5)');
+          glow.addColorStop(1, 'rgba(255,200,0,0)');
+          ctx.fillStyle = glow;
+          ctx.beginPath();
+          ctx.arc(0,0,p.size*2.5,0,Math.PI*2);
+          ctx.fill();
+
+          const body = ctx.createRadialGradient(-p.size*0.3,-p.size*0.3,0,0,0,p.size);
+          body.addColorStop(0,'#fffff0');
+          body.addColorStop(0.4,'#FFF176');
+          body.addColorStop(1,'#ccaa00');
+          ctx.fillStyle = body;
+          ctx.beginPath();
+          ctx.arc(0,0,p.size,0,Math.PI*2);
+          ctx.fill();
+
+        } else {
+          const body = ctx.createRadialGradient(
+            -p.size*0.2, -p.size*0.2, 0,
+            0, 0, p.size
+          );
+          body.addColorStop(0, 'rgba(255,255,220,0.9)');
+          body.addColorStop(0.5, p.color);
+          body.addColorStop(1, p.isPus ? '#997700' : '#550000');
+          ctx.fillStyle = body;
+          ctx.beginPath();
+          ctx.arc(0, 0, p.size, 0, Math.PI*2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    function loop(ts) {
+      if (!lastTime) lastTime = ts;
+      const dt = Math.min((ts - lastTime) / 1000, 0.05);
+      lastTime = ts;
+      const CYCLE = 2000;
+      const cycleTime = (ts % CYCLE) / CYCLE;
+
+      if (cycleTime >= POP_AT && cycleTime < POP_AT + 0.02 && !popped) {
+        spawnParticles();
+        popped = true;
+      }
+      if (cycleTime < POP_AT) popped = false;
+
+      update(dt);
+      draw();
+      requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+  })();
+  </script>
+
+  <script>
+    // 팝업
+    const s = document.createElement("script");
+    s.src = "popup.js";
+    document.body.appendChild(s);
+  </script>
+
+</body>
+</html>
